@@ -1,6 +1,3 @@
- // NOTA SOBRE ESTABILIDADE: Esta implementação de Heap NÃO é estável.
- // Elementos com a mesma prioridade podem não ser removidos na ordem
- // original de chegada devido às trocas na estrutura da árvore.
 
 
 class FilaPrioridadeHeap<T extends Comparable<T>> {
@@ -55,9 +52,9 @@ class FilaPrioridadeHeap<T extends Comparable<T>> {
 
     // --- Lógica de Reorganização (Sift-down / Heapify) ---
 
-    /**
-     * Versão Iterativa: Mais eficiente em memória (Espaço O(1)).
-     */
+    
+     // Versão Iterativa: mais eficiente (memory-wise)
+     
     private void descerIterativo(int indice) {
         while (filhoEsquerda(indice) < nElementos) {
             int maiorFilho = filhoEsquerda(indice);
@@ -74,9 +71,9 @@ class FilaPrioridadeHeap<T extends Comparable<T>> {
         }
     }
 
-    /**
-     * Versão Recursiva: Mais intuitiva academicamente (Espaço O(log n)).
-     */
+    
+     // versão recursiva (+ intuitiva)
+ 
     private void descerRecursivo(int indice) {
         int maior = indice;
         int esquerda = filhoEsquerda(indice);
@@ -96,7 +93,7 @@ class FilaPrioridadeHeap<T extends Comparable<T>> {
         }
     }
 
-    // --- Métodos Auxiliares ---
+    // métodos auxiliares
 
     private int pai(int i) { return (i - 1) / 2; }
     private int filhoEsquerda(int i) { return 2 * i + 1; }
