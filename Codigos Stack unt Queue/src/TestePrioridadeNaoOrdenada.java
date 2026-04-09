@@ -1,10 +1,10 @@
 class FilaPrioridadeNaoOrdenada<T extends Comparable<T>> {
 
-    // Classe interna para representar os nós (elos) da fila
+    
     private class Nodo {
         public T elemento;
         public Nodo proximo;
-        public Nodo anterior; // Permite remoção O(1) sem percorrer a lista novamente
+        public Nodo anterior; 
 
         public Nodo(T elemento) {
             this.elemento = elemento;
@@ -23,22 +23,17 @@ class FilaPrioridadeNaoOrdenada<T extends Comparable<T>> {
         this.nElementos = 0;
     }
 
-    // --- Métodos de Verificação ---
+    
 
-    public boolean estaVazia() { // isEmpty
+    public boolean estaVazia() { 
         return nElementos == 0;
     }
 
-    public int tamanho() { // size
+    public int tamanho() { 
         return nElementos;
     }
 
-    // --- Métodos de Operação (Interface da Fila) ---
-
-    /**
-     * Insere o elemento no final da fila. Operação muito rápida.
-     * Nomenclatura equivalente: enqueue (O(1))
-     */
+    
     public void enfileirar(T elemento) {
         Nodo novoNodo = new Nodo(elemento);
         if (estaVazia()) {
@@ -52,10 +47,7 @@ class FilaPrioridadeNaoOrdenada<T extends Comparable<T>> {
         nElementos++;
     }
 
-    /**
-     * Localiza o maior elemento e o remove.
-     * Nomenclatura equivalente: dequeue (O(n) para busca, O(1) para remoção física)
-     */
+    
     public T desenfileirar() {
         if (estaVazia()) {
             throw new IllegalStateException("A fila de prioridade está vazia.");
@@ -70,10 +62,7 @@ class FilaPrioridadeNaoOrdenada<T extends Comparable<T>> {
         return elementoRemovido;
     }
 
-    /**
-     * Localiza e retorna o maior elemento sem remover.
-     * Nomenclatura equivalente: peek / front (O(n))
-     */
+    
     public T consultarFrente() {
         if (estaVazia()) {
             throw new IllegalStateException("A fila está vazia.");
@@ -81,13 +70,13 @@ class FilaPrioridadeNaoOrdenada<T extends Comparable<T>> {
         return buscarMaior().elemento;
     }
 
-    // --- Métodos Auxiliares de Lógica Interna ---
+    
 
     private Nodo buscarMaior() {
         Nodo maior = inicio;
         Nodo atual = inicio.proximo;
 
-        // Percorre a lista inteira para encontrar a maior prioridade
+       
         while (atual != null) {
             if (atual.elemento.compareTo(maior.elemento) > 0) {
                 maior = atual;
@@ -98,7 +87,7 @@ class FilaPrioridadeNaoOrdenada<T extends Comparable<T>> {
     }
 
     private void removerNodo(Nodo alvo) {
-        // Caso 1: O nó é o único ou o primeiro da lista
+        
         if (alvo == inicio) {
             inicio = inicio.proximo;
             if (inicio != null) {
@@ -107,19 +96,19 @@ class FilaPrioridadeNaoOrdenada<T extends Comparable<T>> {
                 fim = null; // Fila ficou vazia
             }
         }
-        // Caso 2: O nó é o último (Otimizado pelo ponteiro anterior)
+        
         else if (alvo == fim) {
             fim = fim.anterior;
             fim.proximo = null;
         }
-        // Caso 3: O nó está no meio
+        
         else {
             alvo.anterior.proximo = alvo.proximo;
             alvo.proximo.anterior = alvo.anterior;
         }
     }
 
-    // --- Métodos de Exibição ---
+    
 
     @Override
     public String toString() {
@@ -139,7 +128,7 @@ class FilaPrioridadeNaoOrdenada<T extends Comparable<T>> {
 
 class Tarefa implements Comparable<Tarefa> {
     private String nome;
-    private int urgencia; // 1 a 10
+    private int urgencia; 
 
     public Tarefa(String nome, int urgencia) {
         this.nome = nome;
@@ -161,7 +150,7 @@ public class TestePrioridadeNaoOrdenada {
     public static void main(String[] args) {
         FilaPrioridadeNaoOrdenada<Tarefa> fila = new FilaPrioridadeNaoOrdenada<>();
 
-        // Inserção O(1) - Muito rápida
+        
         fila.enfileirar(new Tarefa("Email", 2));
         fila.enfileirar(new Tarefa("Relatório", 8));
         fila.enfileirar(new Tarefa("Café", 1));
@@ -170,7 +159,7 @@ public class TestePrioridadeNaoOrdenada {
         System.out.println("Fila como foi inserida:");
         System.out.println(fila);
 
-        // Remoção O(n) - Precisa procurar em cada passo
+        
         System.out.println("\nExecutando tarefas por prioridade:");
         while (!fila.estaVazia()) {
             System.out.println("Fazendo: " + fila.desenfileirar());
